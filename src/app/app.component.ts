@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
 import { Member } from './interfaces/member.interface';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -24,18 +23,16 @@ export class AppComponent {
     this.counter += 1;
   }
 
-  // Simple property set asynchronously
-  // Won't automatically schedule change detection
-  // unless it's changed to a signal
-  tick = 0;
-  //tick = signal(0);
-  //cdr = inject(ChangeDetectorRef);
+
+  //tick = 0;
+  tick = signal(0);
+  cdr = inject(ChangeDetectorRef);
 
   ngOnInit() {
     setInterval(() => {
-      this.tick += 1;
+      //this.tick += 1;
       //this.cdr.markForCheck();
-      //this.tick.update(c => c += 1);
+      this.tick.update(c => c += 1);
     },1000);
   }
 
